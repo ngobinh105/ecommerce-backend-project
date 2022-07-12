@@ -17,8 +17,8 @@ app.use(express.json())
 app.use(express.text())
 
 // route
-app.use('/users', userRoutes)
-app.use('/cart', cartRoutes)
+app.use('/api/v1/users', userRoutes)
+app.use('/api/v1/carts', cartRoutes)
 
 //swagger api docs
 app.use(
