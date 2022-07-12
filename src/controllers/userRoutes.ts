@@ -16,5 +16,19 @@ userRoutes.put('/:id', (req: Request, res: Response) => {
 userRoutes.delete('/:id', (req: Request, res: Response) => {
   res.send('delete user')
 })
-
+userRoutes.get('/:userId/carts', (req: Request, res: Response) => {
+  res.send('get cart items of user')
+})
+userRoutes.post('/:userId/carts', (req: Request, res: Response) => {
+  res.send('add to cart item')
+})
+userRoutes.put('/:userId/carts/:cartItemId', (req: Request, res: Response) => {
+  res.send('edit cart item info')
+})
+userRoutes.delete(
+  '/:userId/carts/:cartItemId',
+  (req: Request, res: Response) => {
+    res.send('delete cart item')
+  }
+)
 export default userRoutes

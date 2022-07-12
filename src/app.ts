@@ -4,7 +4,6 @@ import YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
 
 import userRoutes from './controllers/userRoutes'
-import cartRoutes from './controllers/cartRoutes'
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, '../_build/swagger.yaml')
@@ -18,7 +17,6 @@ app.use(express.text())
 
 // route
 app.use('/api/v1/users', userRoutes)
-app.use('/api/v1/carts', cartRoutes)
 
 //swagger api docs
 app.use(
