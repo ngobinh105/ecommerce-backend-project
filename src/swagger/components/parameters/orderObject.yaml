@@ -1,0 +1,8 @@
+in: body
+name: body
+description: New Order Object
+required: true
+schema:
+  type: object
+  items:
+    $ref: '../schemas/Order.yaml'

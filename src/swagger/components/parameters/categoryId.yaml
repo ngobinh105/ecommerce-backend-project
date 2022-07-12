@@ -1,0 +1,6 @@
+name: 'categoryId'
+in: 'path'
+description: 'ID of category to update'
+required: true
+type: 'integer'
+format: 'int64'

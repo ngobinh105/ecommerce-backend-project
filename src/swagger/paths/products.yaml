@@ -1,0 +1,34 @@
+get:
+  tags:
+    - 'product'
+  summary: 'list of product'
+  description: 'list of product'
+  responses:
+    '201':
+      description: 'fetch successfully a cate product'
+      content:
+        application/json:
+          schema:
+            type: 'object'
+            items:
+              $ref: '../components/schemas/Product.yaml'
+    '404':
+      description: 'product not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+post:
+  tags:
+    - 'product'
+  summary: 'create product details'
+  description: 'create product details'
+  parameters:
+    - $ref: '../components/parameters/productObject.yaml'
+  responses:
+    '201':
+      description: 'successfully create a product'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '404':
+      description: 'product not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'

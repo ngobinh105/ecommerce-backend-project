@@ -1,0 +1,48 @@
+get:
+  tags:
+    - admin
+  summary: list all users
+  operationId: listUsers
+  description: Admin user role can list all the users
+  security:
+    BearerAuth: []
+  responses:
+    '200':
+      description: fetch successfully all users
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/User.yaml'
+    '400':
+      description: bad input parameter
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+post:
+  tags:
+    - user
+  summary: create a user
+  description: create a new user when sign up
+  parameters:
+    - in: body
+      name: body
+      description: New User Object
+      required: true
+      schema:
+        type: object
+        items:
+          $ref: '../components/schemas/User.yaml'
+  responses:
+    '201':
+      description: successfully created a user
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '400':
+      description: user object is invalid
+      scheme:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '409':
+      description: user is already existed
+      scheme:
+        $ref: '../components/responses/CommonResponse.yaml'

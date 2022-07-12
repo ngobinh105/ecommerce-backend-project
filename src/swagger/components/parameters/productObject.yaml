@@ -1,0 +1,8 @@
+in: body
+name: body
+description: Updated Product Object
+required: true
+schema:
+  type: object
+  items:
+    $ref: '../schemas/Product.yaml'

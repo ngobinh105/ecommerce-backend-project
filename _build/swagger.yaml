@@ -1,0 +1,585 @@
+openapi: 3.0.1
+servers:
+  - description: SwaggerHub API
+    url: HTTP
+  - description: SwaggerHub API
+    url: HTTPS
+info:
+  description: This is an ecommerce API
+  version: 1.0.0
+  title: Ecommerce Website API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: admin
+    description: Secured Admin-only calls
+  - name: user
+    description: Operations available to normal user
+paths:
+  /users:
+    get:
+      tags:
+        - admin
+      summary: list all users
+      operationId: listUsers
+      description: Admin user role can list all the users
+      security:
+        BearerAuth: []
+      responses:
+        '200':
+          description: fetch successfully all users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: bad input parameter
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+              statusCode:
+                type: number
+    post:
+      tags:
+        - user
+      summary: create a user
+      description: create a new user when sign up
+      parameters:
+        - in: body
+          name: body
+          description: New User Object
+          required: true
+          schema:
+            type: object
+            items:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: successfully created a user
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '400':
+          description: user object is invalid
+          scheme:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '409':
+          description: user is already existed
+          scheme:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+  '/user/{userId}':
+    get:
+      tags:
+        - user
+      summary: list a single user
+      description: list a user by id
+      responses:
+        '200':
+          description: fetch successfully a single user
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    put:
+      tags:
+        - user
+      summary: update user info
+      description: update user info
+      parameters:
+        - in: body
+          name: body
+          description: Updated User Object
+          required: true
+          schema:
+            type: object
+            items:
+              $ref: '#/components/schemas/User'
+        - in: path
+          name: id
+          description: user id needs to be provided
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successfully update a user
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '404':
+          description: User not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    delete:
+      tags:
+        - user
+      summary: delete a user
+      description: delete a user
+      parameters:
+        - $ref: '#/paths/~1user~1%7BuserId%7D/put/parameters/1'
+      responses:
+        '200':
+          description: delete user successfully
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '204':
+          description: No content
+        '404':
+          description: User not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+  /orders:
+    get:
+      tags:
+        - admin
+      summary: list all orders
+      operationId: listOrders
+      description: Admin user role can list all orders
+      security:
+        BearerAuth: []
+      responses:
+        '200':
+          description: fetch successfully all orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '400':
+          description: bad input parameter
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    post:
+      tags:
+        - user
+      summary: new order
+      description: user create new order
+      parameters:
+        - in: body
+          name: body
+          description: New Order Object
+          required: true
+          schema:
+            type: object
+            items:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: successfully created an order
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '400':
+          description: order object is invalid
+          scheme:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+  '/order/{orderId}':
+    get:
+      tags:
+        - admin
+      summary: list a single order
+      description: list an order by id
+      responses:
+        '200':
+          description: fetch successfully a single order
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Order'
+        '404':
+          description: order not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    put:
+      tags:
+        - admin
+      summary: update order info
+      description: update order info
+      parameters:
+        - $ref: '#/paths/~1orders/post/parameters/0'
+        - in: path
+          name: id
+          description: order id needs to be provided
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successfully update an order
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '404':
+          description: Order not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+  /products:
+    get:
+      tags:
+        - product
+      summary: list of product
+      description: list of product
+      responses:
+        '201':
+          description: fetch successfully a cate product
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          description: product not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    post:
+      tags:
+        - product
+      summary: create product details
+      description: create product details
+      parameters:
+        - in: body
+          name: body
+          description: Updated Product Object
+          required: true
+          schema:
+            type: object
+            items:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201':
+          description: successfully create a product
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '404':
+          description: product not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+  '/products/{productId}':
+    get:
+      tags:
+        - product
+      summary: get a product
+      description: get single product by product id
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product to update
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '201':
+          description: fetch successfully a product
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          description: product not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    put:
+      tags:
+        - product
+      summary: update product details
+      description: update product details using product id
+      parameters:
+        - $ref: '#/paths/~1products/post/parameters/0'
+      responses:
+        '200':
+          description: successfully update the product
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '404':
+          description: product not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+      security:
+        - BearerAuth:
+            - type: http
+            - scheme: bearer
+    delete:
+      tags:
+        - product
+      summary: delete a product
+      description: delete a product using id
+      parameters:
+        - $ref: '#/paths/~1products~1%7BproductId%7D/get/parameters/0'
+      responses:
+        '200':
+          description: delete product successfully
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '204':
+          description: No product content by id
+        '404':
+          description: product not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+      security:
+        - BearerAuth:
+            - type: http
+            - scheme: bearer
+  /categories:
+    get:
+      tags:
+        - product
+      summary: list of category
+      description: list of category
+      responses:
+        '201':
+          description: fetch successfully a cate category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '404':
+          description: category not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    post:
+      tags:
+        - category
+      summary: creat category details
+      description: creat category details
+      parameters:
+        - name: categoryName
+          in: path
+          description: name of category to create
+          required: true
+          type: string
+        - name: categoryUrl
+          in: path
+          description: image of category to create
+          required: true
+          type: string
+      responses:
+        '201':
+          description: successfully create a category
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '404':
+          description: category not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+      security:
+        - BearerAuth:
+            - type: http
+            - scheme: bearer
+  '/categories/{categoryId}':
+    get:
+      tags:
+        - category
+      summary: get single category
+      description: get single category using id
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of category to update
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '201':
+          description: fetch successfully a cate category
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Category'
+        '404':
+          description: category not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+    put:
+      tags:
+        - category
+      summary: update category details
+      description: update category details using category id
+      parameters:
+        - $ref: '#/paths/~1categories~1%7BcategoryId%7D/get/parameters/0'
+        - name: categoryName
+          in: path
+          description: name of category to create
+          required: true
+          type: string
+        - name: categoryUrl
+          in: path
+          description: image of category to create
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successfully update the category
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '404':
+          description: category not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+      security:
+        - BearerAuth:
+            - type: http
+            - scheme: bearer
+    delete:
+      tags:
+        - category
+      summary: delete a category
+      description: delete a category using id
+      parameters:
+        - $ref: '#/paths/~1categories~1%7BcategoryId%7D/get/parameters/0'
+      responses:
+        '200':
+          description: delete category successfully
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+        '204':
+          description: No category content by id
+        '404':
+          description: category not found
+          schema:
+            $ref: '#/paths/~1users/get/responses/400/schema'
+      security:
+        - BearerAuth:
+            - type: http
+            - scheme: bearer
+  '/categories/{categoryName,categoryUrl}':
+    $ref: '#/paths/~1categories~1%7BcategoryId%7D'
+components:
+  schemas:
+    Product:
+      Product:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          title:
+            type: string
+          category:
+            $ref: '#/components/schemas/Category'
+          image:
+            type: string
+          price:
+            type: number
+          description:
+            type: string
+          images:
+            type: array
+            description: Product Images
+            xml:
+              name: imageUrl
+              wrapped: true
+            items:
+              type: string
+        xml:
+          name: Product
+    Category:
+      Category:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: array
+            description: Category Image
+            xml:
+              name: imageUrl
+              wrapped: true
+            items:
+              type: string
+        xml:
+          name: Category
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        role:
+          type: string
+          description: Account Role
+          enum:
+            - admin
+            - user
+      xml:
+        name: User
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        productId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int32
+        shipDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Order Status
+          enum:
+            - placed
+            - approved
+            - delivered
+        complete:
+          type: boolean
+          default: false
+      xml:
+        name: Order
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+    BearerAuth:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://example.com/oauth/authorize'
+          tokenUrl: 'https://example.com/oauth/token'
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations

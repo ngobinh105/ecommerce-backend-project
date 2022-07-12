@@ -1,0 +1,62 @@
+get:
+  tags:
+    - 'product'
+  summary: 'get a product'
+  description: 'get single product by product id'
+  parameters:
+    - $ref: '../components/parameters/productId.yaml'
+  responses:
+    '201':
+      description: 'fetch successfully a product'
+      content:
+        application/json:
+          schema:
+            type: 'object'
+            items:
+              $ref: '../components/schemas/Product.yaml'
+    '404':
+      description: 'product not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+put:
+  tags:
+    - 'product'
+  summary: 'update product details'
+  description: 'update product details using product id'
+  parameters:
+    - $ref: '../components/parameters/productObject.yaml'
+  responses:
+    '200':
+      description: 'successfully update the product'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '404':
+      description: 'product not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+  security:
+    - BearerAuth:
+        - type: 'http'
+        - scheme: 'bearer'
+delete:
+  tags:
+    - 'product'
+  summary: 'delete a product'
+  description: 'delete a product using id'
+  parameters:
+    - $ref: '../components/parameters/productId.yaml'
+  responses:
+    '200':
+      description: 'delete product successfully'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '204':
+      description: 'No product content by id'
+    '404':
+      description: 'product not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+  security:
+    - BearerAuth:
+        - type: 'http'
+        - scheme: 'bearer'

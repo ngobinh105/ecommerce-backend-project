@@ -1,0 +1,53 @@
+get:
+  tags:
+    - user
+  summary: list a single user
+  description: list a user by id
+  responses:
+    '200':
+      description: fetch successfully a single user
+      content:
+        application/json:
+          schema:
+            type: object
+            items:
+              $ref: '../components/schemas/User.yaml'
+    '404':
+      description: User not found
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+put:
+  tags:
+    - user
+  summary: update user info
+  description: update user info
+  parameters:
+    - $ref: '../components/parameters/userObject.yaml'
+    - $ref: '../components/parameters/userId.yaml'
+  responses:
+    '200':
+      description: successfully update a user
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '404':
+      description: User not found
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+delete:
+  tags:
+    - user
+  summary: delete a user
+  description: delete a user
+  parameters:
+    - $ref: '../components/parameters/userId.yaml'
+  responses:
+    '200':
+      description: delete user successfully
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '204':
+      description: No content
+    '404':
+      description: User not found
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
