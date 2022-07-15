@@ -1,11 +1,11 @@
 import app from './app'
 
 import mongoose from 'mongoose'
+
 require('dotenv').config()
 
 const port = 8080
 
-console.log(process.env.DB_URL)
 mongoose
   .connect(process.env.DB_URL || '')
   .then(() => {
