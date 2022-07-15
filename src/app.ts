@@ -3,8 +3,6 @@ import path from 'path'
 import YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
 
-import userRoutes from './controllers/userRoutes'
-
 const swaggerDocument = YAML.load(
   path.join(__dirname, '../_build/swagger.yaml')
 )
@@ -16,7 +14,6 @@ app.use(express.json())
 app.use(express.text())
 
 // route
-app.use('/api/v1/users', userRoutes)
 
 //swagger api docs
 app.use(
