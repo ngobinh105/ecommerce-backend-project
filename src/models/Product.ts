@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const Users_infoSchema = new Schema(
     {
-        title: {type: String, required: true, maxlength: 60},
+        title: {type: String, maxlength: 60, required: true},
         description: {type: String,  maxlength: 200},
         discount: {type: Number,  min:0, max: 100},
         price: {type: Number, min:0, max: 1000},
