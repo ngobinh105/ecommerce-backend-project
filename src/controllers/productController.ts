@@ -25,7 +25,7 @@ const deleteProduct = (req :Request, res: Response)=>{
     return res.send("Response from delete Prodct Controller")
 }
 
-export default{
+export default {
     getAllProducts,
     getSingleProduct,
     createProduct,

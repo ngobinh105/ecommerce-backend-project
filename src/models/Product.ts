@@ -12,5 +12,5 @@ const Users_infoSchema = new Schema(
        // status: {type: Number, required: true} if we suspend the product 
     }
 );
-//Export Product model , products will be appier in mogodb
+//Export Product model , products will be appear in mogodb
 module.exports = mongoose.model('Product', Users_infoSchema);
