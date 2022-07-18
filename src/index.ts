@@ -7,7 +7,7 @@ const port = 8080
 
 console.log(process.env.DB_URL)
 mongoose
-  .connect(process.env.DB_URL || 'mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.1')
+  .connect(process.env.DB_URL || 'mongodb://127.0.0.1:27017/test?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.1')
   .then(() => {
     app.listen(port, () => console.log(`Server is running on port: ${port}`))
   })
@@ -15,3 +15,5 @@ mongoose
     console.log('failed connection to DB')
     process.exit(1)
   })
+
+   
