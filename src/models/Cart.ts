@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+
 import { ProductType } from 'ProductType';
 import Product from './Product';
 const { Schema } = mongoose
@@ -71,3 +72,4 @@ const CartModel = mongoose.model('Cart',new mongoose.Schema({
 }));
 
 export default CartModel
+
