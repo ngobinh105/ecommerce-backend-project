@@ -4,9 +4,11 @@ import YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
 import { errorHandler } from './errorHandler/error'
 
+import productRouter from './routes/productRoute'
 import { errorHandler } from './errorHandler/error'
 import userRoute from './routes/userRoute'
 import imageRoute from './routes/imageRoute'
+
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, '../_build/swagger.yaml')
@@ -20,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.text())
 
 // route
-
+app.use('/products', productRouter)
 //swagger api docs
 app.use('/users', userRoute)
 app.use('/images', imageRoute)
