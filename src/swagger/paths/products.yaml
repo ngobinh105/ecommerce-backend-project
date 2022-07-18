@@ -1,6 +1,6 @@
 get:
   tags:
-    - 'product'
+    - 'products'
   summary: 'list of product'
   description: 'list of product'
   responses:
