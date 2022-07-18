@@ -1,11 +1,8 @@
 import mongoose from 'mongoose'
 const { Schema } = mongoose
 
-
-export class Category{
-
-    constructor( public name: String, public image:String){} 
-
+export class Category {
+  constructor(public name: String, public image: String) {}
 }
 
 const categorySchema = new Schema({
@@ -13,10 +10,6 @@ const categorySchema = new Schema({
   image: String,
 })
 
-
-const CategoryModel = mongoose.model('Category', new mongoose.Schema({
-    categorySchema
-}))
+const CategoryModel = mongoose.model('Category', categorySchema)
 
 export default CategoryModel
-
