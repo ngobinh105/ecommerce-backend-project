@@ -1,7 +1,9 @@
 import app from './app'
 
 import mongoose from 'mongoose'
+
 import CartModel, { Cart } from './models/Cart'
+
 
 require('dotenv').config()
 
