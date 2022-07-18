@@ -8,44 +8,43 @@ const getAllProduct = async () => {
 
 const getSingleProduct = async (productId: string) => {
     try {
-        const foundUser = await Product.findById(productId)
-        if (!foundUser) {
+        const foundProduct = await Product.findById(productId)
+        if (!foundProduct) {
             throw new CustomError(404, 'Product infomation not found')
         }
-        return foundUser
+        return foundProduct
     } catch (e) {
         console.log(e)
         return
     }
 }
 
-const insertProduct = async (userId: string) => {
-    //db.users.delete
-
-    const foundUser = await Product.findById(userId)
-    if (foundUser) {
-        return await Product.findByIdAndDelete(userId)
+const insertProduct = async (product : any) => {
+    const productData = new Product({
+        product
+    })
+    if (product) {
+        return await Product.insertMany([product])
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }
 }
 
-const updateProduct = async (userId: string, product : Product) => {
-    //db.users.delete
-
-    const foundUser = await Product.findById(userId)
-    if (foundUser) {
-        return await Product.findByIdAndUpdate(userId, product)
+const updateProduct = async (productId: string, product :any) => {
+    const productData = new Product({
+        product
+    })
+    const foundProduct = await Product.findById(productId)
+    if (foundProduct) {
+        return await Product.findByIdAndUpdate(productId, productData)
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }
 }
 
 const deleteProduct = async (productId: string) => {
-    //db.users.delete
-
-    const foundUser = await Product.findById(productId)
-    if (foundUser) {
+    const foundProduct = await Product.findById(productId)
+    if (foundProduct) {
         return await Product.findByIdAndDelete(productId)
     } else {
         throw new CustomError(404, 'Product infomation not found')
@@ -55,5 +54,7 @@ const deleteProduct = async (productId: string) => {
 export default {
     getAllProduct,
     getSingleProduct,
+    insertProduct,
+    updateProduct,
     deleteProduct
 }
