@@ -9,8 +9,8 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   if (err instanceof CustomError) {
-    res.send(err.status)
+    return res.json(err)
   } else {
-    res.send(err.message)
+    return res.send(err.message)
   }
 }
