@@ -1,13 +1,13 @@
 openapi: 3.0.1
 servers:
-  - description: SwaggerHub API
-    url: HTTP
-  - description: SwaggerHub API
-    url: HTTPS
+- url: http://localhost:8080/
+  description: SwaggerHub API
+- url: https://localhost:8080/
+  description: SwaggerHub API
 info:
   description: This is an ecommerce API
   version: 1.0.0
-  title: Ecommerce Website API
+  title: Ecommerce Website APIj
   contact:
     email: you@your-company.com
   license:
@@ -223,7 +223,7 @@ paths:
           description: Order not found
           schema:
             $ref: '#/paths/~1users/get/responses/400/schema'
-  /products:
+  '/products':
     get:
       tags:
         - product
@@ -333,7 +333,7 @@ paths:
         - BearerAuth:
             - type: http
             - scheme: bearer
-  /categories:
+  '/categories':
     get:
       tags:
         - product

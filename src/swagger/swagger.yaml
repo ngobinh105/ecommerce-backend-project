@@ -1,9 +1,9 @@
 openapi: 3.0.1
 servers:
-  - description: SwaggerHub API
-    url: HTTP
-  - description: SwaggerHub API
-    url: HTTPS
+  - url: http://localhost:8080/
+    description: SwaggerHub API
+  - url: https://localhost:8080/
+    description: SwaggerHub API
 info:
   description: This is an ecommerce API
   version: '1.0.0'
@@ -27,10 +27,6 @@ paths:
     $ref: './paths/orders.yaml'
   /order/{orderId}:
     $ref: './paths/order.yaml'
-  /products:
-    $ref: './paths/products.yaml'
-  /products/{productId}:
-    $ref: './paths/product.yaml'
   /categories:
     $ref: './paths/categories.yaml'
   /categories/{categoryId}:

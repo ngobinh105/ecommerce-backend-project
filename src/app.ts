@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(express.text())
 
 // route
-app.use('products', productRouter)
+app.use('/products', productRouter)
 //swagger api docs
 app.use(
   '/',

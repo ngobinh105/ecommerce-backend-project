@@ -1,6 +1,6 @@
 get:
   tags:
-    - 'product'
+    - 'products'
   summary: 'get a product'
   description: 'get single product by product id'
   parameters:
@@ -9,8 +9,7 @@ get:
     '201':
       description: 'fetch successfully a product'
       content:
-        application/json:
-          schema:
+        application/text:
             type: 'object'
             items:
               $ref: '../components/schemas/Product.yaml'
@@ -20,7 +19,7 @@ get:
         $ref: '../components/responses/CommonResponse.yaml'
 put:
   tags:
-    - 'product'
+    - 'products'
   summary: 'update product details'
   description: 'update product details using product id'
   parameters:
@@ -40,7 +39,7 @@ put:
         - scheme: 'bearer'
 delete:
   tags:
-    - 'product'
+    - 'products'
   summary: 'delete a product'
   description: 'delete a product using id'
   parameters:
