@@ -1,0 +1,35 @@
+get:
+  tags:
+    - admin
+  summary: list a single order
+  description: list an order by id
+  responses:
+    '200':
+      description: fetch successfully a single order
+      content:
+        application/json:
+          schema:
+            type: object
+            items:
+              $ref: '../components/schemas/Order.yaml'
+    '404':
+      description: order not found
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+put:
+  tags:
+    - admin
+  summary: update order info
+  description: update order info
+  parameters:
+    - $ref: '../components/parameters/orderObject.yaml'
+    - $ref: '../components/parameters/orderId.yaml'
+  responses:
+    '200':
+      description: successfully update an order
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '404':
+      description: Order not found
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'

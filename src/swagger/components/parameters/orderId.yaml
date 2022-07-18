@@ -1,0 +1,5 @@
+in: path
+name: id
+description: order id needs to be provided
+required: true
+type: string

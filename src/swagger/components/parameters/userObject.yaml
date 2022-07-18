@@ -1,0 +1,8 @@
+in: body
+name: body
+description: Updated User Object
+required: true
+schema:
+  type: object
+  items:
+    $ref: '../schemas/User.yaml'

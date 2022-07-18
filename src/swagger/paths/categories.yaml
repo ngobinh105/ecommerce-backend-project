@@ -1,0 +1,47 @@
+get:
+  tags:
+    - 'product'
+  summary: 'list of category'
+  description: 'list of category'
+  responses:
+    '201':
+      description: 'fetch successfully a cate category'
+      content:
+        application/json:
+          schema:
+            type: 'array'
+            items:
+              $ref: '../components/schemas/Category.yaml'
+    '404':
+      description: 'category not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+post:
+  tags:
+    - 'category'
+  summary: 'creat category details'
+  description: 'creat category details'
+  parameters:
+    - name: 'categoryName'
+      in: 'path'
+      description: 'name of category to create'
+      required: true
+      type: 'string'
+    - name: 'categoryUrl'
+      in: 'path'
+      description: 'image of category to create'
+      required: true
+      type: 'string'
+  responses:
+    '201':
+      description: 'successfully create a category'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '404':
+      description: 'category not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+  security:
+    - BearerAuth:
+        - type: 'http'
+        - scheme: 'bearer'

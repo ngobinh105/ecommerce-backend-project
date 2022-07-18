@@ -1,0 +1,27 @@
+ Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      category:
+        $ref: "./Category.yaml"
+      image: 
+        type: "string"
+      price: 
+        type: "number"
+      description: 
+        type: "string"
+      images:
+        type: "array"
+        description: "Product Images"
+        xml:
+          name: "imageUrl"
+          wrapped: true
+        items:
+          type: "string"
+    xml:
+      name: "Product"
+    

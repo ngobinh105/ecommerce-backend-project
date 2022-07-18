@@ -1,0 +1,73 @@
+get:
+  tags:
+    - 'category'
+  summary: 'get single category'
+  description: 'get single category using id'
+  parameters:
+    - $ref: '../components/parameters/categoryId.yaml'
+  responses:
+    '201':
+      description: 'fetch successfully a cate category'
+      content:
+        application/json:
+          schema:
+            type: 'object'
+            items:
+              $ref: '../components/schemas/Category.yaml'
+    '404':
+      description: 'category not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+put:
+  tags:
+    - 'category'
+  summary: 'update category details'
+  description: 'update category details using category id'
+  parameters:
+    - $ref: '../components/parameters/categoryId.yaml'
+    - name: 'categoryName'
+      in: 'path'
+      description: 'name of category to create'
+      required: true
+      type: 'string'
+    - name: 'categoryUrl'
+      in: 'path'
+      description: 'image of category to create'
+      required: true
+      type: 'string'
+  responses:
+    '200':
+      description: 'successfully update the category'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '404':
+      description: 'category not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+  security:
+    - BearerAuth:
+        - type: 'http'
+        - scheme: 'bearer'
+
+delete:
+  tags:
+    - 'category'
+  summary: 'delete a category'
+  description: 'delete a category using id'
+  parameters:
+    - $ref: '../components/parameters/categoryId.yaml'
+  responses:
+    '200':
+      description: 'delete category successfully'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '204':
+      description: 'No category content by id'
+    '404':
+      description: 'category not found'
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+  security:
+    - BearerAuth:
+        - type: 'http'
+        - scheme: 'bearer'

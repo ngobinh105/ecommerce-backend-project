@@ -1,0 +1,37 @@
+get:
+  tags:
+    - admin
+  summary: list all orders
+  operationId: listOrders
+  description: Admin user role can list all orders
+  security:
+    BearerAuth: []
+  responses:
+    '200':
+      description: fetch successfully all orders
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/schemas/Order.yaml'
+    '400':
+      description: bad input parameter
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+post:
+  tags:
+    - user
+  summary: new order
+  description: user create new order
+  parameters:
+    - $ref: '../components/parameters/orderObject.yaml'
+  responses:
+    '201':
+      description: successfully created an order
+      schema:
+        $ref: '../components/responses/CommonResponse.yaml'
+    '400':
+      description: order object is invalid
+      scheme:
+        $ref: '../components/responses/CommonResponse.yaml'

@@ -1,0 +1,18 @@
+ Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      image: 
+        type: "array"
+        description: "Category Image"
+        xml:
+          name: "imageUrl"
+          wrapped: true
+        items:
+          type: "string"
+    xml:
+      name: "Category"
