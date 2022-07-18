@@ -1,28 +1,38 @@
 import { Request, Response } from "express"
-
-const getAllProducts = (req :Request, res: Response)=>{
+import productService from "../services/productService"
+const getAllProducts = async (req :Request, res: Response)=>{
     console.log("getAllProducts");
-    return res.send("Response from Prodct Controller")
+    const products = await productService.getAllProduct()
+    return res.json(products)
 }
 
-const getSingleProduct = (req :Request, res: Response)=>{
+const getSingleProduct = async (req :Request, res: Response)=>{
     console.log("getSingleProduct");
-    return res.send("Response from sigle Prodct Controller")
+    const { productId } = req.params
+    const product = await productService.getSingleProduct(productId)
+    return res.json(product)
 }
 
-const createProduct = (req :Request, res: Response)=>{
+const createProduct = async (req :Request, res: Response)=>{
     console.log("createProduct");
-    return res.send("Response from create Prodct Controller")
+    const { product } = req.body
+    const productCreate = await productService.insertProduct(product)
+    return res.json(productCreate)
 }
 
-const updateProduct = (req :Request, res: Response)=>{
+const updateProduct = async (req :Request, res: Response)=>{
     console.log("updateProduct");
-    return res.send("Response from update Prodct Controller")
+    const { productId } = req.params
+    const { product } = req.body
+    const productUpdate = await productService.updateProduct(productId, product)
+    return res.json(productUpdate)
 }
 
-const deleteProduct = (req :Request, res: Response)=>{
+const deleteProduct = async (req :Request, res: Response)=>{
     console.log("deleteProduct");
-    return res.send("Response from delete Prodct Controller")
+    const { productId } = req.params
+    const product = await productService.deleteProduct(productId)
+    return res.json(product)
 }
 
 export default {
