@@ -20,6 +20,9 @@ const productSchema = new Schema({
   images: [{ type: String, maxlength: 100, required: true }],
   // status: {type: Number, required: true} if we suspend the product
 });
+
 //Export Product model , products will be appear in mogodb
+
 const Product = mongoose.model<ProductDocument>("Product", productSchema);
+
 export default Product
