@@ -15,5 +15,3 @@ mongoose
     console.log('failed connection to DB')
     process.exit(1)
   })
-
-   

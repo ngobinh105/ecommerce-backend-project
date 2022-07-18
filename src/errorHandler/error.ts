@@ -10,6 +10,7 @@ export const errorHandler = (
 ) => {
   if (err instanceof CustomError) {
     res.json(err)
+
   } else {
     res.send(err.message)
   }

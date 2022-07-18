@@ -1,3 +1,4 @@
+
 import mongoose, { Document, Schema } from 'mongoose'
 
 export type UserRole = 'customer' | 'admin'
@@ -37,6 +38,6 @@ const userSchema = new Schema({
   },
 })
 
-const User = mongoose.model<UserDocument>('User', userSchema)
+const User = mongoose.model<UserDocument>('User', userSchema) 
 
 export default User

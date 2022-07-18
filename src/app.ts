@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
+import { errorHandler } from './errorHandler/error'
 
 import productRouter from './routes/productRoute'
 import { errorHandler } from './errorHandler/error'
@@ -32,6 +33,7 @@ app.use(
     explorer: true,
   })
 )
+
 
 //error handler
 app.use(errorHandler)
