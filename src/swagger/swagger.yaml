@@ -27,6 +27,10 @@ paths:
     $ref: './paths/orders.yaml'
   /order/{orderId}:
     $ref: './paths/order.yaml'
+  /productsee:
+    $ref: './paths/products.yaml'
+  /products/{productId}:
+    $ref: './paths/product.yaml'
   /categories:
     $ref: './paths/categories.yaml'
   /categories/{categoryId}:
