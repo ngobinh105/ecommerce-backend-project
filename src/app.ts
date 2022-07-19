@@ -12,9 +12,10 @@ const app = express()
 //middleware
 app.use(express.json())
 app.use(express.text())
-
+app.use(express.urlencoded())
 // route
 app.use('/products', productRouter)
+
 //swagger api docs
 app.use(
   '/',

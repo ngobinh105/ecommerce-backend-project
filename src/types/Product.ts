@@ -1,10 +1,12 @@
+import { ObjectId } from "mongoose"
+
 export interface Product{
-    productId: String
-    title: String,
-    description?: String,
-    discount?: Number,
-    price: Number,
-    quantity: Number,
-    categoryId: Number,
-    images:String[]
+    productId: string
+    title: string,
+    description?: string,
+    discount?: number,
+    price: number,
+    quantity: number,
+    categoryId: ObjectId,
+    images:string[]
 }

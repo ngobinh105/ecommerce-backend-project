@@ -4,12 +4,12 @@ const productRouter = Router()
 
 productRouter.get('', productController.getAllProducts )
 
-productRouter.get(':productId', productController.getSingleProduct )
-
 productRouter.post('', productController.createProduct )
 
-productRouter.put('', productController.updateProduct )
+productRouter.get('/:productId', productController.getSingleProduct )
 
-productRouter.delete('', productController.deleteProduct )
+productRouter.put('/:productId', productController.updateProduct )
+
+productRouter.delete('/:productId', productController.deleteProduct )
 
 export default productRouter
