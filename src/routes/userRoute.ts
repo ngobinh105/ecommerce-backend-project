@@ -1,6 +1,5 @@
 import { Router } from 'express'
 
-import { verifyUserLogin } from '../middlewares/userMiddlewares'
 import userController from '../controllers/userController'
 import fileUpload from '../middlewares/multerService'
 

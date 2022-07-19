@@ -42,8 +42,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
 const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { userId } = req.params
-    await userService.deleteUser(userId)
-    return res.status(204)
+    const deletedUser = await userService.deleteUser(userId)
+    res.status(204).json(deletedUser)
   } catch (error) {
     if (error instanceof CustomError) {
       return next(error)
@@ -107,7 +107,14 @@ const userLogin = async (req: Request, res: Response) => {
   )
   return res.send(token)
 }
-
+const userLogout = (req: Request, res: Response) => {
+  req.logout((err) => {
+    if (err) {
+      return err
+    }
+    res.redirect('/')
+  })
+}
 const verifyUserToken = (req: Request, res: Response) => {
   const { authorization } = req.headers
   const token = authorization ? authorization.split(' ')[1] : ''
@@ -133,4 +140,5 @@ export default {
   updateUser,
   userLogin,
   verifyUserToken,
+  userLogout,
 }

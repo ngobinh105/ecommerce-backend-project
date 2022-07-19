@@ -4,6 +4,7 @@ import YAML from 'yamljs'
 import swaggerUi from 'swagger-ui-express'
 import passport from 'passport'
 import session from 'express-session'
+import cors from 'cors'
 
 import productRouter from './routes/productRoute'
 import { errorHandler } from './errorHandler/error'
@@ -19,6 +20,7 @@ const swaggerDocument = YAML.load(
 const app = express()
 
 //middleware
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.text())
