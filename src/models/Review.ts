@@ -1,5 +1,17 @@
 import mongoose from 'mongoose'
+
+import { ProductType } from 'ProductType'
+import { UserType } from 'UserType'
 const { Schema } = mongoose
+
+export class Review {
+  constructor(
+    public product: ProductType,
+    public user: UserType,
+    public review: String,
+    public image: String
+  ) {}
+}
 
 const reviewSchema = new Schema({
   product: { type: Schema.Types.ObjectId, ref: 'Product' },
@@ -8,6 +20,6 @@ const reviewSchema = new Schema({
   image: String,
 })
 
-const Review = mongoose.model('Review', reviewSchema)
+const ReviewModel = mongoose.model('Review', reviewSchema)
 
-export default Review
+export default ReviewModel
