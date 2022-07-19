@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import fs from 'fs'
+import jwt from 'jsonwebtoken'
+require('dotenv').config()
 
 import User, { UserRole } from '../models/User'
 import Image from '../models/Image'
@@ -96,10 +98,39 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+const userLogin = async (req: Request, res: Response) => {
+  const user = req.body
+  const token = jwt.sign(
+    user.toJSON(),
+    process.env.JWT_SECRETKEY ? process.env.JWT_SECRETKEY : '',
+    { expiresIn: '3h' }
+  )
+  return res.send(token)
+}
+
+const verifyUserToken = (req: Request, res: Response) => {
+  const { authorization } = req.headers
+  const token = authorization ? authorization.split(' ')[1] : ''
+  if (token) {
+    try {
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRETKEY ? process.env.JWT_SECRETKEY : ''
+      )
+      return res.json(decoded)
+    } catch (e) {
+      throw new CustomError(401, 'Invalid Token or Expired Token')
+    }
+  } else {
+    throw new CustomError(404, 'Token is not provided')
+  }
+}
 export default {
   createUser,
   deleteUser,
   getAllUsers,
   getSingleUser,
   updateUser,
+  userLogin,
+  verifyUserToken,
 }

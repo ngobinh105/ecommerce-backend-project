@@ -10,6 +10,7 @@ export interface UserDocument extends Document {
   role: UserRole
   avatar: string
   phone: string
+  comparePassword(password: string): Promise<boolean>
 }
 
 const userSchema = new Schema<UserDocument>({

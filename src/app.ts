@@ -7,6 +7,7 @@ import productRouter from './routes/productRoute'
 import { errorHandler } from './errorHandler/error'
 import userRoute from './routes/userRoute'
 import imageRoute from './routes/imageRoute'
+import authRoute from './routes/authRoute'
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, '../_build/swagger.yaml')
@@ -24,6 +25,7 @@ app.use('/products', productRouter)
 //swagger api docs
 app.use('/users', userRoute)
 app.use('/images', imageRoute)
+app.use('/auth', authRoute)
 app.use(
   '/',
   swaggerUi.serve,
