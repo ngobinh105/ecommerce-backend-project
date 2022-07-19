@@ -1,5 +1,7 @@
 
-import Product from "../models/Product";
+import { ObjectId } from "mongoose"
+
+import Product, { ProductDocument } from "../models/Product";
 import { CustomError } from "../types/ErrorTypes";
 
 const getAllProduct = async () => {
@@ -15,28 +17,22 @@ const getSingleProduct = async (productId: string) => {
         return foundProduct
     } catch (e) {
         console.log(e)
-        return
+        return 0
     }
 }
 
-const insertProduct = async (product : any) => {
-    const productData = new Product({
-        product
-    })
+const insertProduct = async (product : ProductDocument) => {
     if (product) {
-        return await Product.insertMany([product])
+        return await product.save()
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }
 }
 
-const updateProduct = async (productId: string, product :any) => {
-    const productData = new Product({
-        product
-    })
-    const foundProduct = await Product.findById(productId)
+const updateProduct = async (productId: string, product : any) => {
+    const foundProduct : any = await Product.findById(productId)
     if (foundProduct) {
-        return await Product.findByIdAndUpdate(productId, productData)
+        return await await Product.findById(productId).updateOne({}, product);
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }

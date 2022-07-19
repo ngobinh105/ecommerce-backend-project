@@ -37,6 +37,7 @@ passport.use(googleStrategy)
 
 // route
 app.use('/products', productRouter)
+
 //swagger api docs
 app.use('/users', userRoute)
 app.use('/images', imageRoute)
