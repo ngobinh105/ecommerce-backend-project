@@ -1,10 +1,10 @@
 export interface Product{
-    productId: String
+    productId: number
     title: String,
     description?: String,
-    discount?: Number,
-    price: Number,
-    quantity: Number,
-    categoryId: Number,
+    discount?: number,
+    price: number,
+    quantity: number,
+    categoryId: number,
     images:String[]
 }

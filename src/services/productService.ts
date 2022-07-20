@@ -1,51 +1,68 @@
 
-import Product from "../models/Product";
+import ProductModel from "../models/Product";
 import { CustomError } from "../types/ErrorTypes";
 
 const getAllProduct = async () => {
-    return await Product.find()
+    return await ProductModel.find()
 }
 
 const getSingleProduct = async (productId: string) => {
+    let product=null;
     try {
-        const foundProduct = await Product.findById(productId)
+        const foundProduct = await ProductModel.findOne({
+            productId:productId
+        })
         if (!foundProduct) {
             throw new CustomError(404, 'Product infomation not found')
+        }else{
+     
+            product= foundProduct
         }
-        return foundProduct
+        
     } catch (e) {
         console.log(e)
-        return
+       
     }
+    return product;
 }
 
 const insertProduct = async (product : any) => {
-    const productData = new Product({
-        product
+    const productData = new ProductModel({
+        title: product.title,
+        description: product.description,
+        discount: product.discount,
+        price: product.price,
+        quantity: product.quantity,
+        categoryId: product.categoryId,
+        images: product.images,
     })
-    if (product) {
-        return await Product.insertMany([product])
-    } else {
-        throw new CustomError(404, 'Product infomation not found')
-    }
+ try{
+    ProductModel.create(productData)
+ }catch(err)
+ {
+    console.log(err)
+ }
+      
+  
+        
 }
 
 const updateProduct = async (productId: string, product :any) => {
-    const productData = new Product({
+    const productData = new ProductModel({
         product
     })
-    const foundProduct = await Product.findById(productId)
+    const foundProduct = await ProductModel.findById(productId)
     if (foundProduct) {
-        return await Product.findByIdAndUpdate(productId, productData)
+        return await ProductModel.findByIdAndUpdate(productId, productData)
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }
 }
 
 const deleteProduct = async (productId: string) => {
-    const foundProduct = await Product.findById(productId)
+    const foundProduct = await ProductModel.findById(productId)
     if (foundProduct) {
-        return await Product.findByIdAndDelete(productId)
+        return await ProductModel.findByIdAndDelete(productId)
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }

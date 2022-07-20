@@ -12,7 +12,8 @@ const getSingleProduct = async (req :Request, res: Response)=>{
 }
 
 const createProduct = async (req :Request, res: Response)=>{
-    const { product } = req.body
+    const product  = req.body
+    console.log(product)
     const productCreate = await productService.insertProduct(product)
     return res.json(productCreate)
 }
@@ -23,6 +24,7 @@ const updateProduct = async (req :Request, res: Response)=>{
     const productUpdate = await productService.updateProduct(productId, product)
     return res.json(productUpdate)
 }
+
 
 const deleteProduct = async (req :Request, res: Response)=>{
     const { productId } = req.params
