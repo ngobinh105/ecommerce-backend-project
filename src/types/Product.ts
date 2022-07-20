@@ -1,12 +1,14 @@
 import { ObjectId } from "mongoose"
 
 export interface Product{
-    productId: string
-    title: string,
-    description?: string,
+
+    productId: number
+    title: String,
+    description?: String,
     discount?: number,
     price: number,
     quantity: number,
-    categoryId: ObjectId,
-    images:string[]
+    categoryId: number,
+    images:String[]
+
 }

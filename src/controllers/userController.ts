@@ -11,13 +11,13 @@ import userService from '../services/userService'
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   if (req.file?.path) {
     const data = fs.readFileSync(req.file?.path)
-    console.log(data)
     const newImage = new Image({
       data,
     })
     const savedImage = await newImage.save()
     const avatar = `http://localhost:8080/images/${savedImage._id}`
     const role: UserRole = 'customer'
+
     const { firstName, lastName, email, password, phone } = req.body
 
     const user = new User({

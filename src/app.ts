@@ -10,8 +10,13 @@ import productRouter from './routes/productRoute'
 import { errorHandler } from './errorHandler/error'
 import userRoute from './routes/userRoute'
 import imageRoute from './routes/imageRoute'
+
+import cartRouter from './routes/cartRoute'
+import categoryRouter from './routes/categoryRoute'
+
 import authRoute from './routes/authRoute'
 import { googleStrategy } from './config/passport'
+
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, '../_build/swagger.yaml')
@@ -39,6 +44,9 @@ passport.use(googleStrategy)
 
 // route
 app.use('/products', productRouter)
+
+app.use('/cart',cartRouter)
+app.use('/category',categoryRouter)
 
 //swagger api docs
 app.use('/users', userRoute)

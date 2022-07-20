@@ -11,3 +11,4 @@ userRoute.post('', fileUpload, userController.createUser)
 userRoute.delete('/:userId', userController.deleteUser)
 
 export default userRoute
+    
