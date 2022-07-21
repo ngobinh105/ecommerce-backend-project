@@ -1,11 +1,13 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import { Product } from "Product"
 import cartService from "../services/cartService"
 import productService from "../services/productService"
 
-const getAllCarts = async (req :Request, res: Response)=>{
-    const carts = await cartService.getAllCarts()
-    return res.json(carts)
+const getAllCarts = async (req :Request, res: Response,next: NextFunction)=>{
+    
+ 
+    
+    return res.json(req.body)
 }
 
 const getUserCart = async (req :Request, res: Response)=>{
@@ -32,8 +34,7 @@ const insertProductToCart = async (req :Request, res: Response)=>{
     let productInsert:any = null
     const { productId } = req.params
     const {userId} = req.body
-    console.log("userId "+userId);
-    console.log("productId "+productId);
+
     const product = productService.getSingleProduct(productId)
    product.then((prod)=>{
     cartService.insertProductToCart(prod,userId)
