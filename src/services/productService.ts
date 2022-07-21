@@ -1,5 +1,11 @@
 
+
 import ProductModel from "../models/Product";
+
+import { ObjectId } from "mongoose"
+
+import Product, { ProductDocument } from "../models/Product";
+
 import { CustomError } from "../types/ErrorTypes";
 
 const getAllProduct = async () => {
@@ -21,10 +27,11 @@ const getSingleProduct = async (productId: string) => {
         
     } catch (e) {
         console.log(e)
-       
+
     }
     return product;
 }
+
 
 const insertProduct = async (product : any) => {
     const productData = new ProductModel({
@@ -54,6 +61,7 @@ const updateProduct = async (productId: string, product :any) => {
     const foundProduct = await ProductModel.findById(productId)
     if (foundProduct) {
         return await ProductModel.findByIdAndUpdate(productId, productData)
+
     } else {
         throw new CustomError(404, 'Product infomation not found')
     }

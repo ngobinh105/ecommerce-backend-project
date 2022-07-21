@@ -1,4 +1,7 @@
+import { ObjectId } from "mongoose"
+
 export interface Product{
+
     productId: number
     title: String,
     description?: String,
@@ -7,4 +10,5 @@ export interface Product{
     quantity: number,
     categoryId: number,
     images:String[]
+
 }

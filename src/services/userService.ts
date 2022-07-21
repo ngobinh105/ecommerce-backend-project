@@ -5,6 +5,10 @@ const getAllUsers = async () => {
   return await User.find({})
 }
 
+const createUser = async (user: UserDocument) => {
+  return await user.save()
+}
+
 const getSingleUser = async (userId: string) => {
   try {
     const user = await User.findById(userId)
@@ -17,6 +21,10 @@ const getSingleUser = async (userId: string) => {
     console.log(error)
     return
   }
+}
+
+const getUserByEmail = async (email: string): Promise<UserDocument | null> => {
+  return await User.findOne({ email })
 }
 
 const deleteUser = async (userId: string) => {
@@ -41,4 +49,11 @@ const updateUser = async (
   }
 }
 
-export default { getAllUsers, getSingleUser, deleteUser, updateUser }
+export default {
+  getAllUsers,
+  getSingleUser,
+  deleteUser,
+  updateUser,
+  getUserByEmail,
+  createUser,
+}

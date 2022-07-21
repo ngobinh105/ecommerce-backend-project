@@ -235,9 +235,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Product'
+              type: array
+              items:
+                $ref: '#/components/schemas/Product'
         '404':
           description: product not found
           schema:
@@ -247,15 +247,20 @@ paths:
         - product
       summary: create product details
       description: create product details
+      operationId: "addProduct"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
       parameters:
-        - in: body
-          name: body
-          description: Updated Product Object
-          required: true
-          schema:
-            type: object
-            items:
-              $ref: '#/components/schemas/Product'
+      - in: "body"
+        name: "body"
+        description: "Product object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/NewProduct"
       responses:
         '201':
           description: successfully create a product
@@ -274,19 +279,16 @@ paths:
       parameters:
         - name: productId
           in: path
-          description: ID of product to update
+          description: ID of product to get single product
           required: true
-          type: integer
-          format: int64
+          type: string
       responses:
         '201':
           description: fetch successfully a product
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/Product'
         '404':
           description: product not found
           schema:
@@ -297,12 +299,23 @@ paths:
       summary: update product details
       description: update product details using product id
       parameters:
-        - $ref: '#/paths/~1products/post/parameters/0'
+        - name: productId
+          in: path
+          description: ID of product to update
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Update Product Object
+          required: true
+          schema:
+            items:
+              $ref: '#/definitions/NewProduct'
       responses:
         '200':
           description: successfully update the product
           schema:
-            $ref: '#/paths/~1users/get/responses/400/schema'
+            $ref: '#/components/schemas/Product'
         '404':
           description: product not found
           schema:
@@ -317,7 +330,12 @@ paths:
       summary: delete a product
       description: delete a product using id
       parameters:
-        - $ref: '#/paths/~1products~1%7BproductId%7D/get/parameters/0'
+        - name: productId
+          in: path
+          description: ID of product to delte
+          required: true
+          type: integer
+          format: int64
       responses:
         '200':
           description: delete product successfully
@@ -461,54 +479,79 @@ paths:
             - scheme: bearer
   '/categories/{categoryName,categoryUrl}':
     $ref: '#/paths/~1categories~1%7BcategoryId%7D'
+definitions:
+  NewProduct:
+    type: object
+    properties:
+      title: 
+        type: string
+      description:
+        type: string
+      discount: 
+        type: "integer"
+        format: "int8"
+      price: 
+        type: "integer"
+        format: "int16"
+      quantity: 
+        type: "integer"
+        format: "int16"
+      categoryId:
+        type: string
+      images :
+        type: array
+        description: Product Images
+        xml:
+        name: imageUrl
+        wrapped: true
+        items:
+          type: string
 components:
   schemas:
     Product:
-      Product:
-        type: object
-        properties:
-          id:
-            type: integer
-            format: int64
-          title:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        category:
+          $ref: '#/components/schemas/Category'
+        image:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        images:
+          type: array
+          description: Product Images
+          xml:
+            name: imageUrl
+            wrapped: true
+          items:
             type: string
-          category:
-            $ref: '#/components/schemas/Category'
-          image:
-            type: string
-          price:
-            type: number
-          description:
-            type: string
-          images:
-            type: array
-            description: Product Images
-            xml:
-              name: imageUrl
-              wrapped: true
-            items:
-              type: string
-        xml:
-          name: Product
+      xml:
+        name: Product
     Category:
-      Category:
-        type: object
-        properties:
-          id:
-            type: integer
-            format: int64
-          name:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        image:
+          type: array
+          description: Category Image
+          xml:
+            name: imageUrl
+            wrapped: true
+          items:
             type: string
-          image:
-            type: array
-            description: Category Image
-            xml:
-              name: imageUrl
-              wrapped: true
-            items:
-              type: string
-        xml:
-          name: Category
+      xml:
+        name: Category
     User:
       type: object
       properties:
