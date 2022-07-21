@@ -9,15 +9,12 @@ authRoute.post('/login', verifyUserLogin, userController.userLogin)
 authRoute.post('/profile', userController.verifyUserToken)
 authRoute.get(
   '/googlelogin',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
-  userController.userLogin
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 )
 authRoute.get(
   '/googlelogin/callback',
   passport.authenticate('google', { failureRedirect: '/googlelogin' }),
-  function (req, res) {
-    res.redirect('/')
-  }
+  userController.userLogin
 )
 authRoute.get('/logout', userController.userLogout)
 

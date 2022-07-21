@@ -13,7 +13,7 @@ export const verifyUserLogin = async (
   if (foundUser) {
     const checkPassword = await foundUser.comparePassword(password)
     if (checkPassword) {
-      req.body = foundUser
+      req.user = foundUser
       next()
     } else {
       throw new CustomError(401, 'User credentials are wrong')

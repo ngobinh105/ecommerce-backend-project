@@ -11,12 +11,18 @@ import userService from '../services/userService'
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
   if (req.file?.path) {
     const data = fs.readFileSync(req.file?.path)
-    console.log(data)
-    const newImage = new Image({
-      data,
-    })
-    const savedImage = await newImage.save()
-    const avatar = `http://localhost:8080/images/${savedImage._id}`
+    const checkImage = await Image.findOne({ data: data })
+    let avatar
+    if (checkImage) {
+      avatar = `http://localhost:8080/images/${checkImage._id}`
+    } else {
+      const newImage = new Image({
+        data,
+      })
+      const savedImage = await newImage.save()
+      avatar = `http://localhost:8080/images/${savedImage._id}`
+    }
+
     const role: UserRole = 'customer'
     const { firstName, lastName, email, password, phone } = req.body
 
@@ -31,8 +37,6 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     })
 
     const newUser = await user.save()
-    savedImage.userId = newUser._id
-    savedImage.save()
     return res.status(201).json(newUser)
   } else {
     throw new CustomError(404, 'File cannot be empty')
@@ -99,11 +103,11 @@ const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const userLogin = async (req: Request, res: Response) => {
-  const user = req.body
+  const user = req.user
   const token = jwt.sign(
-    user.toJSON(),
+    user ? user.toJSON() : '',
     process.env.JWT_SECRETKEY ? process.env.JWT_SECRETKEY : '',
-    { expiresIn: '3h' }
+    { expiresIn: '1d' }
   )
   return res.send(token)
 }

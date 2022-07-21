@@ -2,14 +2,12 @@ import mongoose, { Document, ObjectId, Schema } from 'mongoose'
 
 export interface ImageDocument extends Document {
   data: Buffer
-  userId: ObjectId
 }
 
 const imageSchema = new Schema({
-  data: Buffer,
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+  data: {
+    type: Buffer,
+    unique: true,
   },
 })
 
