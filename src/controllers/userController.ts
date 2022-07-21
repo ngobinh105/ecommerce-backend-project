@@ -22,8 +22,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
       const savedImage = await newImage.save()
       avatar = `http://localhost:8080/images/${savedImage._id}`
     }
-
     const role: UserRole = 'customer'
+
     const { firstName, lastName, email, password, phone } = req.body
 
     const user = new User({
