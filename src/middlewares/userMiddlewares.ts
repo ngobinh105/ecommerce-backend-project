@@ -22,3 +22,16 @@ export const verifyUserLogin = async (
     throw new CustomError(404, 'User Not Found')
   }
 }
+
+export const verifyAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const user = req.user
+  if (user?.role === 'admin') {
+    next()
+  } else {
+    throw new CustomError(401, 'User is not allowed to view this content')
+  }
+}

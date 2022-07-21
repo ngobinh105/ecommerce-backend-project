@@ -1,8 +1,9 @@
 import passport from 'passport'
 import { Strategy } from 'passport-google-oauth20'
-import User, { UserDocument } from '../models/User'
+import JwtStrategy, { ExtractJwt } from 'passport-jwt'
 require('dotenv').config()
 
+import User, { UserDocument } from '../models/User'
 import userService from '../services/userService'
 
 declare global {
@@ -41,6 +42,17 @@ export const googleStrategy = new Strategy(
       const user = await userService.createUser(newUser)
       return cb(null, user)
     }
+  }
+)
+
+export const jwtStrategy = new JwtStrategy.Strategy(
+  {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: process.env.JWT_SECRETKEY ? process.env.JWT_SECRETKEY : '',
+  },
+  (jwt_payload, done) => {
+    const user = jwt_payload
+    done(null, user)
   }
 )
 

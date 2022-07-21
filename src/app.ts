@@ -15,8 +15,7 @@ import cartRouter from './routes/cartRoute'
 import categoryRouter from './routes/categoryRoute'
 
 import authRoute from './routes/authRoute'
-import { googleStrategy } from './config/passport'
-
+import { googleStrategy, jwtStrategy } from './config/passport'
 
 const swaggerDocument = YAML.load(
   path.join(__dirname, '../_build/swagger.yaml')
@@ -41,12 +40,13 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(googleStrategy)
+passport.use(jwtStrategy)
 
 // route
 app.use('/products', productRouter)
 
-app.use('/cart',cartRouter)
-app.use('/category',categoryRouter)
+app.use('/cart', cartRouter)
+app.use('/category', categoryRouter)
 
 //swagger api docs
 app.use('/users', userRoute)
