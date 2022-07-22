@@ -32,6 +32,6 @@ export const verifyAdmin = async (
   if (user?.role === 'admin') {
     next()
   } else {
-    next(new CustomError(401, 'user are not allowed to view this'))
+    throw new CustomError(401, 'user are not allowed to view this')
   }
 }

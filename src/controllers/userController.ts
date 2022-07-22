@@ -9,37 +9,41 @@ import { CustomError } from '../types/ErrorTypes'
 import userService from '../services/userService'
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.file?.path) {
-    const data = fs.readFileSync(req.file?.path)
-    const checkImage = await Image.findOne({ data: data })
-    let avatar
-    if (checkImage) {
-      avatar = `http://localhost:8080/images/${checkImage._id}`
-    } else {
-      const newImage = new Image({
-        data,
+  try {
+    if (req.file?.path) {
+      const data = fs.readFileSync(req.file?.path)
+      const checkImage = await Image.findOne({ data: data })
+      let avatar
+      if (checkImage) {
+        avatar = `http://localhost:8080/images/${checkImage._id}`
+      } else {
+        const newImage = new Image({
+          data,
+        })
+        const savedImage = await newImage.save()
+        avatar = `http://localhost:8080/images/${savedImage._id}`
+      }
+      const role: UserRole = 'customer'
+
+      const { firstName, lastName, email, password, phone } = req.body
+
+      const user = new User({
+        firstName,
+        lastName,
+        email,
+        password,
+        avatar,
+        role,
+        phone,
       })
-      const savedImage = await newImage.save()
-      avatar = `http://localhost:8080/images/${savedImage._id}`
+
+      const newUser = await user.save()
+      return res.status(201).json(newUser)
+    } else {
+      throw new CustomError(404, 'File cannot be empty')
     }
-    const role: UserRole = 'customer'
-
-    const { firstName, lastName, email, password, phone } = req.body
-
-    const user = new User({
-      firstName,
-      lastName,
-      email,
-      password,
-      avatar,
-      role,
-      phone,
-    })
-
-    const newUser = await user.save()
-    return res.status(201).json(newUser)
-  } else {
-    next(new CustomError(404, 'File cannot be empty'))
+  } catch (e) {
+    next(e)
   }
 }
 

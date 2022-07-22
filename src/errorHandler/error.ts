@@ -9,7 +9,7 @@ export const errorHandler = (
   next: NextFunction
 ) => {
   if (err instanceof CustomError) {
-    return res.json(err)
+    return res.status(err.status).json(err)
   } else {
     return res.status(500).send(err.message)
   }
