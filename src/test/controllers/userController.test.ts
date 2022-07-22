@@ -1,6 +1,8 @@
 import request from 'supertest'
 import app from '../../app'
-import { connectDB, dropDB, dropCollections } from '../utils/mockDb'
+import mongoose from 'mongoose'
+import { connectDB, dropCollections, dropDB } from '../utils/mockDb'
+require('dotenv').config()
 
 beforeAll(async () => {
   await connectDB()
@@ -8,7 +10,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await dropDB()
 })
-afterEach(async () => {
+beforeEach(async () => {
   await dropCollections()
 })
 
@@ -27,8 +29,8 @@ describe('test user controller', () => {
     const response = await request(app)
       .post('/users')
       .set('Content-Type', 'multipart/form-data')
-      .field('firstname', 'Binh')
-      .field('lastname', 'Ngo')
+      .field('firstName', 'Binh')
+      .field('lastName', 'Ngo')
       .field('email', 'binhngo1005@gmail.com')
       .field('password', 'testing')
       .field('phone', '0460399494')

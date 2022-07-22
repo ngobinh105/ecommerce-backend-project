@@ -1,23 +1,31 @@
-import mongoose, { ConnectOptions } from 'mongoose'
+import mongoose from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
+require('dotenv').config()
 
-const mongoServer = new MongoMemoryServer()
+let mongod: any = null
 
 export const connectDB = async () => {
-  const uri = mongoServer.getUri()
-  const mongooseOpts = {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
+  try {
+    mongod = await MongoMemoryServer.create()
+    const dbUrl = mongod.getUri()
+    const conn = await mongoose.connect(dbUrl)
+    console.log(`MongoDB connected: ${conn.connection.host}`)
+  } catch (err) {
+    console.log(err)
+    process.exit(1)
   }
-  await mongoose.connect(uri, mongooseOpts as ConnectOptions)
 }
 
 export const dropDB = async () => {
-  await mongoose.connection.dropDatabase()
-  await mongoose.connection.close()
-  await mongoServer.stop()
+  try {
+    await mongoose.connection.close()
+    if (mongod) {
+      await mongod.stop()
+    }
+  } catch (err) {
+    console.log(err)
+    process.exit(1)
+  }
 }
 export const dropCollections = async () => {
   const collections = await mongoose.connection.db.collections()

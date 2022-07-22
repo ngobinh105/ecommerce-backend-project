@@ -39,7 +39,7 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
     const newUser = await user.save()
     return res.status(201).json(newUser)
   } else {
-    throw new CustomError(404, 'File cannot be empty')
+    next(new CustomError(404, 'File cannot be empty'))
   }
 }
 
