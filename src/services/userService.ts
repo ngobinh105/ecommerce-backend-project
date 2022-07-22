@@ -12,7 +12,6 @@ const createUser = async (user: UserDocument) => {
 const getSingleUser = async (userId: string) => {
   try {
     const user = await User.findById(userId)
-    console.log('user', user)
     if (!user) {
       throw new CustomError(404, 'User not found')
     }
